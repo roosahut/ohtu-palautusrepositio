@@ -1,6 +1,13 @@
 import unittest
 from statistics import Statistics
 from player import Player
+from enum import Enum
+
+
+class SortBy(Enum):
+    POINTS = 1
+    GOALS = 2
+    ASSISTS = 3
 
 
 class PlayerReaderStub:
@@ -33,7 +40,17 @@ class TestStatistics(unittest.TestCase):
         response = self.statistics.team('EDM')
         self.assertEqual(response[0].name, 'Semenko')
 
-    def test_top_return_right_order(self):
-        response = self.statistics.top(1)
+    def test_top_return_right_order_for_points(self):
+        response = self.statistics.top(1, SortBy.POINTS)
         points = response[0].goals + response[0].assists
         self.assertAlmostEqual(points, 35+89)
+
+    def test_top_return_right_order_for_goals(self):
+        response = self.statistics.top(1, SortBy.GOALS)
+        points = response[0].goals
+        self.assertAlmostEqual(points, 45)
+
+    def test_top_return_right_order_for_assists(self):
+        response = self.statistics.top(1, SortBy.ASSISTS)
+        points = response[0].assists
+        self.assertAlmostEqual(points, 89)
