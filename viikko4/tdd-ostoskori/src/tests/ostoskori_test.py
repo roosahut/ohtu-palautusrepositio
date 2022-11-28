@@ -46,3 +46,8 @@ class TestOstoskori(unittest.TestCase):
         self.kori.lisaa_tuote(self.maito)
 
         self.assertEqual(self.kori.hinta(), 6)
+
+    def test_yhden_tuotteen_lisaamisen_jalkeen_korissa_yksi_ostosolio(self):
+        self.kori.lisaa_tuote(self.maito)
+        ostokset = self.kori.ostokset()
+        self.assertEqual(len(ostokset), 1)
